@@ -25,42 +25,48 @@ public class parseTree {
     }
 
     public static void setFirst(String value) {
-        Node first = new Node(null, null, value,null);
+        first = new Node(null, null, value,null);
         current = first;
     }
 
     public static void makeTree(String input) {
         String[] in = input.split(" ");
         setFirst(in[0]);
+        for (int i = 1; i < in.length; i++) {
 
-        for (int i = 1; i < in.length-1; i++) {
-            System.out.println(in[i]);
-            if (current.left == null && !in[i].matches("[-+]?\\d+"))
-                current.left = new Node(null, null, in[i],current);
-
-
-            if (current.left != null && !in[i].matches("[-+]?\\d+")) {
-                do {
-                    current = current.left;
-                } while (current.left != null);
-                current.left = new Node(null, null, in[i],current);
+            if (current.left == null && !in[i].matches("\\d+")) {
+                current.left = new Node(null, null, in[i], current);
+                current = current.left;
             }
 
-
-            if( current.left.value.matches("[-+]?\\d+") && current.right.value.matches("[-+]?\\d+")){
+            if(current.left != null && current.right!= null)
+            if( current.left.value.matches("\\d+") && current.right.value.matches("\\d+")){
                 do{
                     current=current.parent;
                 }while (current.right==null);
                 current.right=new Node(null, null, in[i],current);
+                current = current.right;
+            }
+
+            if(current.right == null && in[i].matches("\\d+")){
+                current.right = new Node(null, null, in[i],current);
+                current=current.right;
             }
 
 
-            if(current.value.matches("[-+]?\\d+")&&current.parent.left==null&&in[i].matches("[-+]?\\d+")){
+            if(current.value.matches("\\d+")&&current.parent.left==null&&in[i].matches("\\d+")){
                 current.parent.left = new Node(null, null, in[i],current);
+                current = current.parent.left;
             }
+        }
+        outputTree(first);
+    }
 
-
-
+    public static void outputTree(Node current){
+        if (current != null) {
+            outputTree(current.left);
+            System.out.print(" " + current.value);
+            outputTree(current.right);
         }
     }
 }

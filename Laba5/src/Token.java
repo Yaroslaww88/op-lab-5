@@ -1,26 +1,16 @@
-public class Token<T> {
+public interface Token {
+    int OPERATION_OPEN_BRACKET = 1;
+    int OPERATION_CLOSE_BRACKET = 2;
+    int OPERATION_ADD = 3;
+    int OPERATION_SUBTRACT = 4;
+    int OPERATION_MULTIPLY = 5;
+    int OPERATION_DIVIDE = 6;
 
-    T value;
+    int VALUE_CONSTANT = 20;
 
-    Token (T value) {
-        this.value = value;
-    }
+    int FUNCTION_IF = 30;
 
-    public T getValue() {
-        return this.value;
-    }
-
-    public TokenTypes getType() {
-        if (value instanceof Double) {
-            return TokenTypes.DOUBlE_VARIABLE;
-        }
-        if (value instanceof String) {
-            return TokenTypes.STRING_VARIABLE;
-        }
-        return TokenTypes.OPERATION;
-    }
-
-    public String toString() {
-        return getType().toString() + " " + this.value;
-    }
+    int getType();
+    double getValue() throws Exception;
+    String toString();
 }

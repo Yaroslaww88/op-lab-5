@@ -1,9 +1,9 @@
 public class VariableToken implements Token {
 
-    String variable;
+    String name;
 
-    VariableToken(String variable) {
-        this.variable = variable;
+    VariableToken(String name) {
+        this.name = name;
     }
 
     @Override
@@ -18,6 +18,6 @@ public class VariableToken implements Token {
 
     @Override
     public String toString() {
-        return "Variable: " + this.variable;
+        return "Variable, name: " + this.name;
     }
 }

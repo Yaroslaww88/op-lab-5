@@ -25,10 +25,10 @@ public class RPN {
             } else {
                 if (currentToken.getType() == Token.OPERATION_SUBTRACT &&
                         (i == 0 || tokens.get(i-1).getType() == Token.OPERATION_OPEN_BRACKET)) {
-                    operationsStack.push(new OperationToken('-', Token.OPERATION_SUBTRACT)); //May be Token.OPERATION_UNARY_MINUS must be
+                    operationsStack.push(new OperationToken('-', Token.OPERATION_UNARY_MINUS)); //May be Token.OPERATION_UNARY_MINUS must be
                 } else {
-                    if (currentToken.getType() == Token.OPERATION_SUBTRACT)
-                        currentToken = new OperationToken('-', Token.OPERATION_UNARY_MINUS);
+//                    if (currentToken.getType() == Token.OPERATION_SUBTRACT)
+//                        currentToken = new OperationToken('-', Token.OPERATION_UNARY_MINUS);
                     while (!operationsStack.isEmpty() && operationsStack.peek().getType() != Token.OPERATION_OPEN_BRACKET &&
                         getTokenPrecedence(currentToken) < getTokenPrecedence(operationsStack.peek())) {
                         //kappa

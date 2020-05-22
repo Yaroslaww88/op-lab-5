@@ -1,15 +1,18 @@
-public class ConstantNode extends Node {
-    double value;
+public class ConstantNode implements Node {
 
-    public ConstantNode(double value) {
+    double value = 0.0;
+
+    ConstantNode(double value) {
         this.value = value;
     }
 
-    public double getValue() {
-        return this.value;
+    @Override
+    public int getType() {
+        return Node.CONSTANT;
     }
 
-    public NodeTypes getType() {
-        return NodeTypes.CONSTANT_NODE;
+    @Override
+    public String toString() {
+        return "ConstantNode Value: " + value;
     }
 }

@@ -31,8 +31,8 @@ public class Tokenizer {
                         temp = "";
                     } else {
                         //add saved variable like constant value
-                        Double doubleVariable = variablesMap.get(temp);
-                        ConstantToken variableToken = new ConstantToken(doubleVariable);
+//                        Double doubleVariable = variablesMap.get(temp);
+                        VariableToken variableToken = new VariableToken(temp);
                         tokens.add(variableToken);
                         temp = "";
                     }
@@ -40,9 +40,14 @@ public class Tokenizer {
                 break;
             }
 
-            if (isFunctionOperator(temp)) {
+            if (c == '=') {
 //                System.out.println("function: " + c);
-                FunctionToken functionToken = new FunctionToken(temp);
+                if (!temp.equals("")) {
+                    VariableToken variableToken = new VariableToken(temp);
+                    tokens.add(variableToken);
+                    temp = "";
+                }
+                FunctionToken functionToken = new FunctionToken("=");
                 tokens.add(functionToken);
                 temp = "";
                 continue;
@@ -60,8 +65,7 @@ public class Tokenizer {
                         temp = "";
                     } else {
                         //add saved variable like constant value
-                        Double doubleVariable = variablesMap.get(temp);
-                        ConstantToken variableToken = new ConstantToken(doubleVariable);
+                        VariableToken variableToken = new VariableToken(temp);
                         tokens.add(variableToken);
                         temp = "";
                     }
@@ -109,8 +113,11 @@ public class Tokenizer {
         }
     }
 
-    private boolean isFunctionOperator(String str) {
-        if (str.equals("if"))
+    private boolean isFunctionOperator(char c) {
+//        if (str.equals("if") || str.equals("="))
+//            return true;
+
+        if (c == '=')
             return true;
 
         return false;

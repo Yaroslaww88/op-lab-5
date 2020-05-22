@@ -13,6 +13,8 @@ public interface Token {
 
     int FUNCTION_IF = 30;
 
+    int FUNCTION_EQUALITY = 35;
+
     int VARIABLE = 40;
 
     int getType();

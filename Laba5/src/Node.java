@@ -5,6 +5,7 @@ public interface Node {
     int UNARY_EXPRESSION = 4;
     int FUNCTION = 5;
     int MULTIPLY_EXPRESSIONS = 6;
+    int EQUALITY_SIGN = 7;
 
     int getType();
     String toString();

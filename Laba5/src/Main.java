@@ -13,9 +13,13 @@ public class Main {
             for (Token token : tokens) {
                 System.out.println(token);
             }
+            System.out.println("-------------------------------------------");
+            ArrayList<Token> rpnTokens = RPN.getRPN(tokens);
+            for (Token token : rpnTokens) {
+                System.out.println(token);
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        RPNn.getRPN("( 6 + 10 - 4 ) / ( 1 + 1 * 2 ) + 1");
     }
 }

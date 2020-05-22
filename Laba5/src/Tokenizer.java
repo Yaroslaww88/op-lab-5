@@ -60,8 +60,7 @@ public class Tokenizer {
                         temp = "";
                     } else {
                         //add saved variable like constant value
-                        Double doubleVariable = variablesMap.get(temp);
-                        ConstantToken variableToken = new ConstantToken(doubleVariable);
+                        VariableToken variableToken = new VariableToken(temp);
                         tokens.add(variableToken);
                         temp = "";
                     }

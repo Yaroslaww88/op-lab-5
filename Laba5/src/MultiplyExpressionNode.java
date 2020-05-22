@@ -29,6 +29,9 @@ public class MultiplyExpressionNode implements Node {
             if (tree.getType() == Node.VARIABLE) {
                 return map.get(((VariableNode)tree).name);
             }
+            if (tree.getType() == Node.UNARY_EXPRESSION) {
+                return calculateTree(tree) * (-1);
+            }
             throw new Exception("Note type is not EQUALITY_SIGN and BINARY_EXPRESSION " + tree.getType());
         }
 
@@ -61,7 +64,10 @@ public class MultiplyExpressionNode implements Node {
         if (tree.getType() == Node.CONSTANT) {
             return ((ConstantNode)tree).value;
         }
-
+        if (tree.getType() == Node.UNARY_EXPRESSION) {
+            Node child = ((UnaryOperationNode)tree).child;
+            return calculateTree(child) * (-1);
+        }
         throw new Exception("Type of Node is not defined: " + tree.getType());
     }
 

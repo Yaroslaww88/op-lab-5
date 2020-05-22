@@ -64,6 +64,12 @@ public class Main {
     public static Node getExpressionTree(ArrayList<Token> expressionTokens) throws Exception {
         Stack<Node> stack = new Stack<>();
         for (Token token : expressionTokens) {
+            if (token.getType() == Token.OPERATION_UNARY_MINUS) {
+                Node node = stack.pop();
+                UnaryOperationNode unaryOperationNode = new UnaryOperationNode(node);
+                stack.push(unaryOperationNode);
+                continue;
+            }
             if (!isOperator(token)) {
                 if (token.getType() == Token.VARIABLE) {
                     VariableNode variableNode = new VariableNode(((VariableToken)token).name);

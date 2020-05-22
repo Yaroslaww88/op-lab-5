@@ -17,13 +17,13 @@ public class MultiplyExpressionNode implements Node {
                 String name = equalityNode.variableNode.name;
                 Double value = calculateTree(equalityNode.valueNode);
                 map.put(name, value);
-                System.out.println("ExpressionNode Name: " + name + " Value: " + value);
+//                System.out.println("ExpressionNode Name: " + name + " Value: " + value);
                 continue;
             }
             if (tree.getType() == Node.BINARY_EXPRESSION) {
                 BinaryOperationNode binaryOperationNode = (BinaryOperationNode)tree;
                 Double result = calculateTree(binaryOperationNode);
-                System.out.println("Result: " + result);
+//                System.out.println("Result: " + result);
                 return result;
             }
             if (tree.getType() == Node.VARIABLE) {
@@ -39,7 +39,7 @@ public class MultiplyExpressionNode implements Node {
     }
 
     public static Double calculateTree(Node tree) throws Exception {
-        //TODO add setting variable Node, add Unary Operation Node
+        System.out.println("Visit Node: " + tree);
         if (tree.getType() == Node.BINARY_EXPRESSION) {
             Double leftValue = calculateTree(((BinaryOperationNode)tree).left);
             Double rightValue = calculateTree(((BinaryOperationNode)tree).right);
@@ -62,7 +62,8 @@ public class MultiplyExpressionNode implements Node {
             return map.get(name);
         }
         if (tree.getType() == Node.CONSTANT) {
-            return ((ConstantNode)tree).value;
+            Double value = ((ConstantNode)tree).value;
+            return value;
         }
         if (tree.getType() == Node.UNARY_EXPRESSION) {
             Node child = ((UnaryOperationNode)tree).child;

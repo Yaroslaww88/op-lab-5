@@ -10,4 +10,9 @@ public class UnaryOperationNode implements Node {
     public int getType() {
         return Node.UNARY_EXPRESSION;
     }
+
+    @Override
+    public String toString() {
+        return "UnaryOperationNode child: " + child;
+    }
 }

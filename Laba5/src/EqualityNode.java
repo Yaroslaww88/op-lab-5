@@ -12,4 +12,9 @@ public class EqualityNode implements Node {
     public int getType() {
         return Node.EQUALITY_SIGN;
     }
+
+    @Override
+    public String toString() {
+        return "EqualityNode VariableNode: " + variableNode + " valueNode: " + valueNode;
+    }
 }

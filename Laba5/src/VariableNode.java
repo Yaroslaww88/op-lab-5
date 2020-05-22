@@ -10,4 +10,9 @@ public class VariableNode implements Node {
     public int getType() {
         return Node.VARIABLE;
     }
+
+    @Override
+    public String toString() {
+        return "VariableNode name: " + name;
+    }
 }

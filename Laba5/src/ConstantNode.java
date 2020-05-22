@@ -10,4 +10,9 @@ public class ConstantNode implements Node {
     public int getType() {
         return Node.CONSTANT;
     }
+
+    @Override
+    public String toString() {
+        return "ConstantNode Value: " + value;
+    }
 }

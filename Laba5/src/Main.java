@@ -16,10 +16,10 @@ public class Main {
                 String input = scanner.nextLine();
                 Tokenizer tokenizer = new Tokenizer(input, new TreeMap<>());
                 ArrayList<Token> tokens = tokenizer.getTokens();
-                System.out.println("Tokens: ");
-                for (Token token : tokens) {
-                    System.out.println(token);
-                }
+//                System.out.println("Tokens: ");
+//                for (Token token : tokens) {
+//                    System.out.println(token);
+//                }
                 Boolean isSettingExpression = false;
                 for (int i = 0; i < tokens.size(); i++) {
                     if (tokens.get(i).getType() == Token.FUNCTION_EQUALITY) {
@@ -45,10 +45,10 @@ public class Main {
                     continue;
                 }
                 ArrayList<Token> rpnTokens = RPN.getRPN(tokens);
-                System.out.println("RPN Token: ");
-                for (Token token : rpnTokens) {
-                    System.out.println(token);
-                }
+//                System.out.println("RPN Token: ");
+//                for (Token token : rpnTokens) {
+//                    System.out.println(token);
+//                }
                 Node node = getExpressionTree(rpnTokens);
                 mainNode.addNode(node);
             }
@@ -75,14 +75,41 @@ public class Main {
                     VariableNode variableNode = new VariableNode(((VariableToken)token).name);
                     stack.push(variableNode);
                 } else {
-                    System.out.println(token.toString() + " " + token.getType());
+//                    System.out.println(token.toString() + " " + token.getType());
                     ConstantNode constantNode = new ConstantNode(token.getValue());
                     stack.push(constantNode);
                 }
             } else {
                 Node rightNode = stack.pop();
                 Node leftNode = stack.pop();
-                //TODO: ADD OPTIMIZATIONS
+                if (token.getType() == Token.OPERATION_MULTIPLY) {
+                    if (leftNode.getType() == Node.CONSTANT) {
+                        if ( ((ConstantNode)leftNode).value == 0.0 ) {
+                            stack.push(new ConstantNode(0.0));
+                            continue;
+                        }
+                    }
+                    if (rightNode.getType() == Node.CONSTANT) {
+                        if ( ((ConstantNode)rightNode).value == 0.0 ) {
+                            stack.push(new ConstantNode(0.0));
+                            continue;
+                        }
+                    }
+                }
+                if (token.getType() == Token.OPERATION_DIVIDE) {
+                    if (leftNode.getType() == Node.CONSTANT) {
+                        if ( ((ConstantNode)leftNode).value == 1.0 ) {
+                            stack.push(rightNode);
+                            continue;
+                        }
+                    }
+                    if (rightNode.getType() == Node.CONSTANT) {
+                        if ( ((ConstantNode)rightNode).value == 1.0 ) {
+                            stack.push(leftNode);
+                            continue;
+                        }
+                    }
+                }
                 BinaryOperationNode binaryOperationNode = new BinaryOperationNode((OperationToken)token, leftNode, rightNode);
                 stack.push(binaryOperationNode);
             }

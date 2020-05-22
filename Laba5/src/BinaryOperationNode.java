@@ -14,4 +14,9 @@ public class BinaryOperationNode implements Node {
     public int getType() {
         return Node.BINARY_EXPRESSION;
     }
+
+    @Override
+    public String toString() {
+        return "BinaryOperationNode Left: " + left + " " + operator + " Right: " + right;
+    }
 }

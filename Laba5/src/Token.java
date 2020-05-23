@@ -14,6 +14,7 @@ public interface Token {
     int FUNCTION_IF = 30;
 
     int FUNCTION_EQUALITY = 35;
+    int FUNCTION_READ = 36;
 
     int VARIABLE = 40;
 

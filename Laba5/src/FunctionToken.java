@@ -14,6 +14,8 @@ public class FunctionToken implements Token {
         if (function.equals("="))
             return Token.FUNCTION_EQUALITY;
 
+        if (function.equals(">"))
+            return Token.FUNCTION_READ;
         //TODO fix
         return -1;
     }

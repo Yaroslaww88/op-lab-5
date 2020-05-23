@@ -40,6 +40,18 @@ public class Tokenizer {
                 break;
             }
 
+            if (c == '>') {
+                String variableName = "";
+                for (int j = i + 1; j < input.length() - 1; j++) {
+                    variableName += input.charAt(j);
+                }
+                FunctionToken functionToken = new FunctionToken(">");
+                tokens.add(functionToken);
+                VariableToken variableToken = new VariableToken(variableName);
+                tokens.add(variableToken);
+                break;
+            }
+
             if (c == '=') {
 //                System.out.println("function: " + c);
                 if (!temp.equals("")) {

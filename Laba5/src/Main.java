@@ -21,6 +21,7 @@ public class Main {
 //                    System.out.println(token);
 //                }
                 Boolean isSettingExpression = false;
+                Boolean isReading = false;
                 for (int i = 0; i < tokens.size(); i++) {
                     if (tokens.get(i).getType() == Token.FUNCTION_EQUALITY) {
                         if (i != 1) {
@@ -29,6 +30,28 @@ public class Main {
                         }
                         isSettingExpression = true;
                     }
+                    if (tokens.get(i).getType() == Token.FUNCTION_READ) {
+                        if (tokens.size() != 2) {
+                            System.out.println("Reading line has more than two tokens");
+                            exit(1);
+                        }
+                        String variableName = ((VariableToken)tokens.get(1)).name;
+                        System.out.println("Enter variable with name: " + variableName);
+                        Scanner consoleScanner = new Scanner(System.in);
+                        Double variableValue = consoleScanner.nextDouble();
+//                        Node valueNode = new ConstantNode(variableValue);
+//                        VariableNode variableNode = new VariableNode(((VariableToken)tokens.get(1)).name);
+//                        Node node = new EqualityNode(variableNode, valueNode);
+//                        mainNode.addNode(node);
+                        tokens.clear();
+                        tokens.add(new VariableToken(variableName));
+                        tokens.add(new FunctionToken("="));
+                        tokens.add(new ConstantToken(variableValue));
+                        isSettingExpression = true;
+                    }
+                }
+                if (isReading) {
+                    continue;
                 }
                 if (isSettingExpression) {
                     VariableToken variableToken = (VariableToken)tokens.get(0);
@@ -45,10 +68,6 @@ public class Main {
                     continue;
                 }
                 ArrayList<Token> rpnTokens = RPN.getRPN(tokens);
-//                System.out.println("RPN Token: ");
-//                for (Token token : rpnTokens) {
-//                    System.out.println(token);
-//                }
                 Node node = getExpressionTree(rpnTokens);
                 mainNode.addNode(node);
             }
@@ -82,34 +101,34 @@ public class Main {
             } else {
                 Node rightNode = stack.pop();
                 Node leftNode = stack.pop();
-                if (token.getType() == Token.OPERATION_MULTIPLY) {
-                    if (leftNode.getType() == Node.CONSTANT) {
-                        if ( ((ConstantNode)leftNode).value == 0.0 ) {
-                            stack.push(new ConstantNode(0.0));
-                            continue;
-                        }
-                    }
-                    if (rightNode.getType() == Node.CONSTANT) {
-                        if ( ((ConstantNode)rightNode).value == 0.0 ) {
-                            stack.push(new ConstantNode(0.0));
-                            continue;
-                        }
-                    }
-                }
-                if (token.getType() == Token.OPERATION_DIVIDE) {
-                    if (leftNode.getType() == Node.CONSTANT) {
-                        if ( ((ConstantNode)leftNode).value == 1.0 ) {
-                            stack.push(rightNode);
-                            continue;
-                        }
-                    }
-                    if (rightNode.getType() == Node.CONSTANT) {
-                        if ( ((ConstantNode)rightNode).value == 1.0 ) {
-                            stack.push(leftNode);
-                            continue;
-                        }
-                    }
-                }
+//                if (token.getType() == Token.OPERATION_MULTIPLY) {
+//                    if (leftNode.getType() == Node.CONSTANT) {
+//                        if ( ((ConstantNode)leftNode).value == 0.0 ) {
+//                            stack.push(new ConstantNode(0.0));
+//                            continue;
+//                        }
+//                    }
+//                    if (rightNode.getType() == Node.CONSTANT) {
+//                        if ( ((ConstantNode)rightNode).value == 0.0 ) {
+//                            stack.push(new ConstantNode(0.0));
+//                            continue;
+//                        }
+//                    }
+//                }
+//                if (token.getType() == Token.OPERATION_DIVIDE) {
+//                    if (leftNode.getType() == Node.CONSTANT) {
+//                        if ( ((ConstantNode)leftNode).value == 1.0 ) {
+//                            stack.push(rightNode);
+//                            continue;
+//                        }
+//                    }
+//                    if (rightNode.getType() == Node.CONSTANT) {
+//                        if ( ((ConstantNode)rightNode).value == 1.0 ) {
+//                            stack.push(leftNode);
+//                            continue;
+//                        }
+//                    }
+//                }
                 BinaryOperationNode binaryOperationNode = new BinaryOperationNode((OperationToken)token, leftNode, rightNode);
                 stack.push(binaryOperationNode);
             }
